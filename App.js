@@ -1,20 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Member from './src/member/Member';
+import MemberDetail from './src/member/MemberDetail';
+import MemberUpdate from './src/member/MemberUpdate';
+
+
+import Profile from './src/profile/Profile';
+import ProfileEdit from './src/profile/ProfileEdit';
+
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const MemberStack = () => {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen options={{headerShown:false}} name="MemberScreen" component={Member} />
+      <Stack.Screen options={{headerShown:false}} name="MemberDetailScreen" component={MemberDetail} />
+      <Stack.Screen options={{headerShown:false}} name="MemberUpdateScreen" component={MemberUpdate} />
+    </Stack.Navigator>
+  )
+}
+
+const ProfileStack = () => {
+  return(
+    <Stack.Navigator>
+    <Stack.Screen options={{headerShown:false}} name="ProfileScreen" component={Profile} />
+    <Stack.Screen options={{headerShown:false}} name="ProfileEditScreen" component={ProfileEdit} />
+  </Stack.Navigator>
+  )
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator initialRouteName="Member">
+        <Tab.Screen name="Profile" component={ProfileStack} />
+        <Tab.Screen name="Member" component={MemberStack} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
